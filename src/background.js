@@ -31,7 +31,7 @@ chrome.webNavigation.onBeforeNavigate.addListener(details => {
   if ( urlObj.hostname === 'www.google.co.uk' || urlObj.hostname === 'www.google.com') {
     searchQuery = query.q || hash.q
     // stop searches from being tweeted if preceded by `|` (allows for private searching)
-    if (searchQuery[0] === '|') {
+    if (searchQuery && searchQuery[0] === '|') {
       searchQuery = null
     }
   }

@@ -3,11 +3,6 @@ import queryString from 'query-string'
 import url from 'url'
 import * as keys from './keys'
 import ChromeExOAuth from './chrome_ex_oauth'
-import OAuthSimple from './chrome_ex_oauthsimple'
-
-window.onload = function() {
-  ChromeExOAuth.initCallbackPage()
-}
 
 const oauth = ChromeExOAuth.initBackgroundPage({
   'request_url': keys.TWITTER_REQUEST_URL,
@@ -35,6 +30,10 @@ chrome.webNavigation.onBeforeNavigate.addListener(details => {
   let searchQuery
   if ( urlObj.hostname === 'www.google.co.uk' || urlObj.hostname === 'www.google.com') {
     searchQuery = query.q || hash.q
+    // stop searches from being tweeted if preceded by `|` (allows for private searching)
+    if (searchQuery[0] === '|') {
+      searchQuery = null
+    }
   }
   if (searchQuery) {
     client.post('statuses/update', { status: searchQuery },  function(error, tweet, response) {

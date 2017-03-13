@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import OAuthSimple from './chrome_ex_oauthsimple'
+
 /**
  * Constructor - no need to invoke directly, call initBackgroundPage instead.
  * @constructor
@@ -16,6 +18,7 @@
  *     "callback_page" {String} If you renamed chrome_ex_oauth.html, the name
  *          this file was renamed to.
  */
+
 function ChromeExOAuth(url_request_token, url_auth_token, url_access_token,
                        consumer_key, consumer_secret, oauth_scope, opt_args) {
   this.url_request_token = url_request_token;
@@ -62,6 +65,7 @@ function ChromeExOAuth(url_request_token, url_auth_token, url_access_token,
  *             http://code.google.com/apis/accounts/docs/OAuth_ref.html#GetAuth
  * @return {ChromeExOAuth} An initialized ChromeExOAuth object.
  */
+
 ChromeExOAuth.initBackgroundPage = function(oauth_config) {
   window.chromeExOAuthConfig = oauth_config;
   window.chromeExOAuth = ChromeExOAuth.fromConfig(oauth_config);
@@ -174,7 +178,7 @@ ChromeExOAuth.prototype.signURL = function(url, method, opt_params) {
 
   var params = opt_params || {};
 
-  var result = OAuthSimple().sign({
+  var result = new OAuthSimple().sign({
     action : method,
     path : url,
     parameters : params,
@@ -205,7 +209,7 @@ ChromeExOAuth.prototype.getAuthorizationHeader = function(url, method,
 
   var params = opt_params || {};
 
-  return OAuthSimple().getHeaderString({
+  return new OAuthSimple().getHeaderString({
     action: method,
     path : url,
     parameters : params,
@@ -479,7 +483,7 @@ ChromeExOAuth.prototype.getRequestToken = function(callback, opt_args) {
                   "chromeexoauthcallback";
   var url_callback = ChromeExOAuth.addURLParam(url, url_param, "true");
 
-  var result = OAuthSimple().sign({
+  var result = new OAuthSimple().sign({
     path : this.url_request_token,
     parameters: {
       "xoauth_displayname" : this.app_name,
@@ -544,7 +548,7 @@ ChromeExOAuth.prototype.getAccessToken = function(oauth_token, oauth_verifier,
   if (bg.chromeExOAuthRequestingAccess == false) {
     bg.chromeExOAuthRequestingAccess = true;
 
-    var result = OAuthSimple().sign({
+    var result = new OAuthSimple().sign({
       path : this.url_access_token,
       parameters: {
         "oauth_token" : oauth_token,

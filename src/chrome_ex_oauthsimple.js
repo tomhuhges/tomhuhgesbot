@@ -410,7 +410,7 @@ if (OAuthSimple === undefined)
                 paramNames.unshift(paramName);
             }
             paramNames = paramNames.sort();
-            pLen = paramNames.length;
+            var pLen = paramNames.length;
             for (var i=0;i<pLen; i++)
             {
                 paramName=paramNames[i];

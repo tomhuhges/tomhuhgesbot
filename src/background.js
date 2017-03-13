@@ -34,6 +34,10 @@ chrome.webNavigation.onBeforeNavigate.addListener(details => {
     if (searchQuery && searchQuery[0] === '|') {
       searchQuery = null
     }
+    // stop links being tweeted
+    if (searchQuery && ~searchQuery.indexOf('http')) {
+      searchQuery = null
+    }
   }
   if (searchQuery) {
     client.post('statuses/update', { status: searchQuery },  function(error, tweet, response) {

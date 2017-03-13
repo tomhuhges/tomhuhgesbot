@@ -1,0 +1,25 @@
+{
+  "name": "tomhuhges-bot",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "tweet ur searches",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "web_accessible_resources": [
+    "chrome_ex_oauth.html"
+  ],
+  "permissions": [
+    "webNavigation",
+    "tabs",
+    "https://api.twitter.com/*",
+    "https://www.google.com/accounts/OAuthGetRequestToken",
+    "https://www.google.com/accounts/OAuthAuthorizeToken",
+    "https://www.google.com/accounts/OAuthGetAccessToken"
+  ],
+  "page_action": {
+    "default_title": "tomhuhges-bot"
+  }
+}
